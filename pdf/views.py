@@ -10,10 +10,19 @@ def accept(request):
         degree = request.POST.get("degree","")
         school = request.POST.get("school","")
         university = request.POST.get("university","")
-        previous_role = request.POST.get("previous_role","")
+        previous_work = request.POST.get("previous_work","")
         skills = request.POST.get("skills","")
 
-        profile = Profile(name=name, email=email, phone=phone, summary=summary, degree=degree,school=school, university, previous_role=previous_role, skills=skills)
+        profile = Profile(name=name,email=email,phone=phone,summary=summary,degree=degree,school=school,university=university,previous_work=previous_work,skills=skills)
         profile.save()
 
     return render(request, 'pdf/accept.html')
+
+def resume(request, id): #id zeby sciagnac cv konkretej osoby
+    user_profile = Profile.objects.get(pk=id)
+    return render(request, 'pdf/resume.html', {'user_profile':user_profile})
+
+
+    # pip install pdfkit
+    # wkhtmltopdf instaluje na dysku 
+    # wlasicowsci zmienne srodowiskowe path edit add new sciezka C:\Program Files\wkhtmltopdf
